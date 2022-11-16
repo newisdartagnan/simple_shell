@@ -11,7 +11,7 @@ void cmd_x(char *line)
 	const char *delim = "\n\t ";
 
 	x = 0;
-	argArr = token_interface(line, delim, x);
+	argArr = tInterface(line, delim, x);
 	if (argArr[0] == NULL)
 	{
 		single_free(2, argArr, line);

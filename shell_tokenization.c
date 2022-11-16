@@ -16,7 +16,7 @@ char **tokenize_path(int index, char *str)
 
 	len = str_len(str);
 	vars = environ[index] + (len + 1);
-	z = token_interface(vars, delim, x);
+	z = tInterface(vars, delim, x);
 	if (z == NULL)
 		return (NULL);
 	return (z);

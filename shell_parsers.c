@@ -19,7 +19,7 @@ void parse_line(char *ipt, size_t size, int x, char **name)
 	len = getline(&ipt, &size, stdin);
 	if (len != -1)
 	{
-		argList = token_interface(ipt, delim, counter);
+		argList = tInterface(ipt, delim, counter);
 		if (argList[0] == NULL)
 		{
 			single_free(2, argList, ipt);
@@ -83,13 +83,13 @@ void create_child(char **argList, char *ipt, int x, char **name)
 }
 
 /**
- * token_interface - communicates with cmd
+ * tInterface - communicates with cmd
  * @ipt: input.
  * @delim: delimeter
  * @x: counter
  * Return: annarray or Null
  */
-char **token_interface(char *ipt, const char *delim, int x)
+char **tInterface(char *ipt, const char *delim, int x)
 {
 	char **argList;
 
