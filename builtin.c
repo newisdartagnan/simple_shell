@@ -67,8 +67,7 @@ void (*check_built_ins(char *func))(char *func)
 {
 	int i;
 
-	usine_f builds[] =
-		{
+	usine_f builds[] = {
 		{"cd", cmd_x},
 		{"exit", exit_x},
 		{"env", env_x},
@@ -89,7 +88,7 @@ void (*check_built_ins(char *func))(char *func)
  * built_in - Checks for builtin functions
  * @arg_list: list of arg given as inputs
  * @ipt: input
- * Return: 0 on success, 
+ * Return: 0 on success
  * -1 on failure
  */
 int built_in(char **arg_list, char *ipt)

@@ -7,19 +7,22 @@
  */
 int find_index(char *v)
 {
-        int x, y, len;
-        len = str_len(v);
-        for (x = 0; environ[x] != NULL; x++)
-        {
-                for (y = 0; y < len; y++)
-                {
-                        if (environ[x][y] != v[y])
-                                break;
-                }
-                if (y == len && environ[x][y] == '=')
-                        return (x);
-        }
-        return (-1);
+	int x, y, len;
+
+	len = str_len(v);
+	for (x = 0; environ[x] != NULL; x++)
+	{
+		for (y = 0; y < len; y++)
+		{
+			if (environ[x][y] != v[y])
+			{
+				break;
+			}
+		}
+		if (y == len && environ[x][y] == '=')
+			return (x);
+	}
+	return (-1);
 }
 /**
  * path_finder - finds a path
