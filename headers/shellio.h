@@ -21,6 +21,6 @@ char **tokenize_path(int, char *);
 char *search_directories(char **, char *);
 char *build_path(char *, char *);
 void double_free(char **);
-
+void single_free(int, ...);
 
 #endif
