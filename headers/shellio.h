@@ -10,5 +10,6 @@ void print_string(char *, int);
 /* prototypes */
 
 char **tInterface(char *, const char *, int);
+int count_token(char *, const char *);
 
 #endif
