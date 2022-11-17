@@ -7,4 +7,8 @@ char *_strdup(char *);
 int print_number(int);
 void print_string(char *, int);
 
+/* prototypes */
+
+char **tInterface(char *, const char *, int);
+
 #endif
