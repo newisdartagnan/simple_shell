@@ -6,14 +6,16 @@ void (*check_built_ins(char *))(char *);
 void cmd_x(char *);
 void exit_x(char *ipt);
 void env_x(char *);
+
 /**
- * struct builtin_d - create the built-ins functions
- * @nam: name
+ * struct usine - create the built-ins functions
+ * @name: name
  * @func: a pointer
- */
+*/
 typedef struct usine
 {
-        char *name;
-        void (*func)(char *);
+	char *name;
+	void (*func)(char *);
 } usine_f;
+
 #endif
