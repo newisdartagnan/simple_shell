@@ -1,6 +1,7 @@
 #include "main.h"
 /**
- * @head: head of linkedlistt
+ * add_path - adds path
+ * @head: head of linked list
  * @str: the string
  * Return: pointer
  */
