@@ -1,26 +1,13 @@
 #include "main.h"
-
 /**
- * main - the main function
- * @argc: arg count
- * @argv: list of args
- * Return: 0
+ * main - start the shell
+ * @argc: Counter of arguments received
+ * @argv: Pointer to arguments received
+ * Return: Always 0
  */
-int main(__attribute__((unused)) int argc, char **argv)
+int main(int argc, char **argv)
 {
-	char *ipt;
-	size_t size;
-	int i;
-
-	i = 0;
-	signal(SIGINT, SIG_IGN);
-	do {
-		i++;
-		ipt = NULL;
-		size = 0;
-		parse_line(ipt, size, i, argv);
-
-	} while (1);
-
+	(void)argc;
+	shell_loop(argv);
 	return (0);
 }

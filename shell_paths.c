@@ -1,142 +1,97 @@
 #include "main.h"
 /**
- * find_index - returns the index of a given variable
- * @v: the variable
- * Return: the index of the variable.
- * otherwise returns -1.
+ * add_path - adds path
+ * @head: head of linked list
+ * @str: the string
+ * Return: pointer
  */
-int find_index(char *v)
+path_t *add_path(path_t **head, const char *str)
 {
-	int x, y, len;
+	path_t *tmp;
+	path_t *last = *head;
 
-	len = str_len(v);
-	for (x = 0; environ[x] != NULL; x++)
+	tmp = malloc(sizeof(path_t));
+	if (tmp == NULL)
+		return (NULL);
+	if (str != NULL)
+		tmp->path = _strdup((char *)str);
+	else
+		tmp->path = "(nil)";
+	tmp->next = NULL;
+	if (*head == NULL)
 	{
-		for (y = 0; y < len; y++)
+		*head = tmp;
+		return (tmp);
+	}
+	while (last->next != NULL)
+		last = last->next;
+	last->next = tmp;
+	return (tmp);
+}
+/**
+ * pLinker - path linkerp
+ * Return: linkedlist
+  */
+path_t *pLinker()
+{
+	const char *name = "PATH";
+	char *nodevalue;
+	path_t *head;
+
+	head = NULL;
+	nodevalue = _get_env(name);
+	nodevalue = strtok(nodevalue, ":");
+	while (nodevalue != NULL)
+	{
+		add_path(&head, nodevalue);
+		nodevalue = strtok(NULL, ":");
+	}
+	return (head);
+}
+
+/**
+ * xPath - execute the command
+ * @x: cmd
+ * @op: options to a cmd
+ * Return: 0 or -1
+ */
+int xPath(char *x, char **op)
+{
+	DIR *dir;
+	int st = 0;
+	struct dirent *pDirent;
+	path_t *head = pLinker();
+	path_t *tmp = head;
+	char *path = NULL;
+
+	while (tmp->next != NULL)
+	{
+		dir = opendir(tmp->path);
+		if (dir == NULL)
 		{
-			if (environ[x][y] != v[y])
+			printf("Cannot open directory '%s'\n", head->path);
+			return (1);
+		}
+		while ((pDirent = readdir(dir)) != NULL)
+		{
+			if ((_strcmp(pDirent->d_name, x)) == 0)
 			{
+				path = _strdup(tmp->path);
+				path = _strcat(path, "/");
+				path = _strcat(path, x);
+				op[0] = malloc(_strlen(path) + 1);
+				_strcpy(op[0], path);
 				break;
 			}
 		}
-		if (y == len && environ[x][y] == '=')
-			return (x);
+		closedir(dir);
+		if (path != NULL)
+			break;
+		tmp = tmp->next;
 	}
-	return (-1);
-}
-/**
- * path_finder - finds a path
- * @ipt: the input enterrd by the user.
- * Return: Upon sucess, the path of the program.
- * NULL, otherwise
- */
-char *path_finder(char *ipt)
-{
-	char *str = "PATH";
-	char *constructed;
-	char **path_tokens;
-	int index;
-	char *directory;
-
-	index = find_index(str);
-	path_tokens = tokenize_path(index, str);
-	if (path_tokens == NULL)
-		return (NULL);
-
-	directory = search_directories(path_tokens, ipt);
-	if (directory == NULL)
-	{
-		double_free(path_tokens);
-		return (NULL);
-	}
-
-	constructed = build_path(directory, ipt);
-	if (constructed == NULL)
-	{
-		double_free(path_tokens);
-		return (NULL);
-	}
-
-	double_free(path_tokens);
-
-	return (constructed);
-}
-
-/**
- * search_directories - it is in the name
- * @path_tokens: a pointer
- * @cmd: cmd
- * Return: a string
- */
-char *search_directories(char **path_tokens, char *cmd)
-{
-	int i, s;
-	char *cwd;
-	char *buf;
-	size_t size;
-	struct stat stat_buf;
-
-	buf = NULL;
-	size = 0;
-	cwd = getcwd(buf, size);
-	if (cwd == NULL)
-		return (NULL);
-	if (cmd[0] == '/')
-		cmd = cmd + 1;
-	for (i = 0; path_tokens[i] != NULL; i++)
-	{
-		s = chdir(path_tokens[i]);
-		if (s == -1)
-		{
-			perror("ERROR!");
-			return (NULL);
-		}
-		s = stat(cmd, &stat_buf);
-		if (s == 0)
-		{
-			chdir(cwd);
-			free(cwd);
-			return (path_tokens[i]);
-		}
-	}
-	chdir(cwd);
-	free(cwd);
-	return (NULL);
-}
-
-/**
- * build_path - builds the path
- * @directory: the dir
- * @command: cmd
- * Return: a string
- */
-char *build_path(char *directory, char *command)
-{
-	int i, j;
-	int dir_len;
-	int command_len;
-	int len;
-	char *built;
-
-	if (directory == NULL || command == NULL)
-		return (NULL);
-	dir_len = str_len(directory) + 1;
-	command_len = str_len(command) + 1;
-	len = dir_len + command_len;
-
-	built = malloc(sizeof(char) * len);
-	if (built == NULL)
-		return (NULL);
-
-	for (i = 0; i < len; i++)
-	{
-		for (j = 0; directory[j] != '\0'; j++, i++)
-			built[i] = directory[j];
-		built[i] = '/';
-		i++;
-		for (j = 0; command[j] != '\0'; j++, i++)
-			built[i] = command[j];
-	}
-	built[--i] = '\0';
-	return (built);
+	if ((execve(path, op, NULL)) == -1)
+		st = -1;
+	free(path);
+	free_list(head);
+	return (st);
 }
