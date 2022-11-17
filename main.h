@@ -10,13 +10,7 @@
 #include <dirent.h>
 #include <stddef.h>
 #include <string.h>
-<<<<<<< HEAD
 #include <stdio.h>
-#define PROMPT " "
-
-extern char **environ;
-
-=======
 #include "structs.h"
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
@@ -26,8 +20,6 @@ char **coreShell(char *ipt);
 char *_strcat(char *dest, char *name);
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
->>>>>>> 5b872cbd2946dd29fd37d77f2ac3f22ffd7bc804
-
 void free_list(path_t *head);
 void shell_loop(char **argv);
 void genError(char *name, char **buffer, size_t nEr);
