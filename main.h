@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#define PROMPT "simple shell $ "
+#define PROMPT " "
 
 extern char **environ;
 
