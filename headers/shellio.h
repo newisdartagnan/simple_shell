@@ -15,6 +15,6 @@ char **tokenize(int, char *, const char *);
 void create_child(char **, char *, int, char **);
 void parse_line(char *, size_t, int, char **);
 char *path_finder(char *);
-
+int str_len(char *);
 
 #endif
