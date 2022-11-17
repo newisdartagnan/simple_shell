@@ -1,25 +1,24 @@
 #include "main.h"
 
 /**
- * main - Entry point of the program.
- * @ac: The number of parameters passed to the executable file. In the case
- * this variable will not be used.
- * @av: The name of the program.
- * Return: Always 0.
+ * main - the main function
+ * @argc: arg count
+ * @argv: list of args
+ * Return: 0
  */
-int main(__attribute__((unused)) int ac, char **av)
+int main(__attribute__((unused)) int argc, char **argv)
 {
-	char *line;
+	char *ipt;
 	size_t size;
-	int command_counter;
+	int i;
 
-	command_counter = 0;
+	i = 0;
 	signal(SIGINT, SIG_IGN);
 	do {
-		command_counter++;
-		line = NULL;
+		i++;
+		ipt = NULL;
 		size = 0;
-		parse_line(line, size, command_counter, av);
+		parse_line(ipt, size, i, argv);
 
 	} while (1);
 
