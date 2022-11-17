@@ -17,5 +17,6 @@ void parse_line(char *, size_t, int, char **);
 char *path_finder(char *);
 int str_len(char *);
 int find_index(char *);
+char **tokenize_path(int, char *);
 
 #endif
