@@ -11,5 +11,7 @@ void print_string(char *, int);
 
 char **tInterface(char *, const char *, int);
 int count_token(char *, const char *);
+char **tokenize(int, char *, const char *);
+
 
 #endif
